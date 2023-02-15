@@ -7,29 +7,33 @@ import pandas as ps
 site = "SimplyRecipes"
 
 
-def parseDown(overview, ingredients):
-    
+def scrapeSimplyRecipes(webdata):
     finalOverview = []
     finalIngredients = []
-    for line in overview.stripped_strings:
-        #if(line[:1].isdigit()):
-            finalOverview.append(line)
-    
-    for line in ingredients.get_text().split("\n"):
-        if(len(line)>1 and line[:1].isdigit()):
-            finalIngredients.append(line.strip("\n"))
-
-    
-    return finalOverview, finalIngredients
-
-def scrapeSimplyRecipes(webdata):
     id = "structured-project-content_1-0"
+
     soupedData = bs(webdata.content, "html.parser")
-    recipeContent = soupedData.find(id)
+
+    recipeTitle = soupedData.find("h1", {"class":"heading__title"})
+    recipeImg = soupedData.find("img", {"id":"mntl-sc-block-image_1-0-2"})
     recipeOverview = soupedData.find("div", {"id":"project-meta_1-0"})
     recipeIngredients = soupedData.find("div", {"id":"structured-ingredients_1-0"})
 
-    print(parseDown(recipeOverview, recipeIngredients))
+    title = recipeTitle.get_text()
+
+    img = recipeImg.get("data-src")
+    
+
+    print(title)
+    print(img)
+
+    for line in recipeOverview.stripped_strings:
+        #if(line[:1].isdigit()):
+            finalOverview.append(line)
+
+    for line in recipeIngredients.get_text().split("\n"):
+        if(len(line)>1 and line[:1].isdigit()):
+            finalIngredients.append(line.strip("\n"))
 
 
 def buildJsonRecipe(overview, ingredients):
@@ -38,14 +42,7 @@ def buildJsonRecipe(overview, ingredients):
 
     # print(overviewContent.get_text())
     # print(recipeIngredients.get_text())
-
-
-def scrapeGeneric(webdata):
-    soupedData = bs(webdata.content, "html.parser")
-    for line in soupedData.stripped_strings:
-        print(line)
     
-
 
 def main():
     command = ""
