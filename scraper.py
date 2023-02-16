@@ -18,6 +18,7 @@ def scrapeSimplyRecipes(webdata):
     recipeImg = soupedData.find("img", {"id":"mntl-sc-block-image_1-0-2"})
     recipeOverview = soupedData.find("div", {"id":"project-meta_1-0"})
     recipeIngredients = soupedData.find("div", {"id":"structured-ingredients_1-0"})
+    recipeSteps = soupedData.find("div", {"id" : "structured-project__steps_1-0"})
 
     title = recipeTitle.get_text()
 
@@ -32,6 +33,11 @@ def scrapeSimplyRecipes(webdata):
         #if(len(line)>1 and line[:1].isdigit()):
         if(len(line)>1):
             finalIngredients.append(line.strip("\n"))
+
+    recipeSteps.find("figure").decompose()
+
+    for line in recipeSteps.stripped_strings:
+        print(line)
 
     return [title, img, finalOverview, finalIngredients]
 
