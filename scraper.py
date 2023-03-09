@@ -10,6 +10,7 @@ site = "SimplyRecipes"
 def scrapeSimplyRecipes(webdata):
     finalOverview = []
     finalIngredients = []
+    finalSteps = []
     id = "structured-project-content_1-0"
 
     soupedData = bs(webdata.content, "html.parser")
@@ -20,24 +21,33 @@ def scrapeSimplyRecipes(webdata):
     recipeIngredients = soupedData.find("div", {"id":"structured-ingredients_1-0"})
     recipeSteps = soupedData.find("div", {"id" : "structured-project__steps_1-0"})
 
+    #None check each item and only proceed if the item is found. If not, log it.
+    if(recipeTitle == None):
+        title = "Missing Title"
+    if(recipeImg == None):
+        img = "Missing Image"
+    if(recipeOverview != None):
+        for line in recipeOverview.stripped_strings:
+            if(line[:1].isdigit()):
+                finalOverview.append(line)
+    if(recipeIngredients != None):
+        for line in recipeIngredients.get_text().split("\n"):
+        #if(len(line)>1 and line[:1].isdigit()):
+            if(len(line)>1):
+                finalIngredients.append(line.strip("\n").replace("\u00a0", " "))
+    if(recipeSteps != None):
+        recipeSteps.find("figure").decompose()
+
+        for line in recipeSteps.stripped_strings:
+            if(line.split(' ')[0] != "Simply"):
+                finalSteps.append(line)
+                print(line)
+
     title = recipeTitle.get_text()
 
-    img = recipeImg.get("data-src")
+    #img = recipeImg.get("data-src")
 
 
-    for line in recipeOverview.stripped_strings:
-        if(line[:1].isdigit()):
-            finalOverview.append(line)
-
-    for line in recipeIngredients.get_text().split("\n"):
-        #if(len(line)>1 and line[:1].isdigit()):
-        if(len(line)>1):
-            finalIngredients.append(line.strip("\n"))
-
-    recipeSteps.find("figure").decompose()
-
-    for line in recipeSteps.stripped_strings:
-        print(line)
 
     return [title, img, finalOverview, finalIngredients]
 
