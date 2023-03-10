@@ -24,16 +24,17 @@ def main():
 
     while(command != "exit"):
         command = input("Webpage Url> ")
+        result = ""
         if(command != "exit" or command != "quit"):
             if(command == "test"):
                 webdata = requests.get("https://www.simplyrecipes.com/lemony-baked-cod-with-wild-rice-and-fennel-recipe-5224339")
+                result = scrapeWebsite(webdata, "simplyrecipes")
             else:
                 webdata = requests.get(command)
 
             if("simplyrecipes" in command):
-                result = scrapeSimplyRecipes(webdata, "simplyrecipes")
-            if("test" in command):
-                break
+                result = scrapeWebsite(webdata, "simplyrecipes")
+        
             
             
             with open(filename + ".json", "w") as outfile:

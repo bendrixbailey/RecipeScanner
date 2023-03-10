@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup as bs
 import configparser
-from helpers import *
+from util.helpers import *
 
 
 config = configparser.ConfigParser()
 config.read('util/websites.ini')
 
-def scrapeSimplyRecipes(webdata, websiteType):
+def scrapeWebsite(webdata, websiteType):
     """Logic for scraping the SimplyRecipes website. Method will only work, as it needs tags for specific information sections
 
     Args:
@@ -31,8 +31,14 @@ def scrapeSimplyRecipes(webdata, websiteType):
     #None check each item and only proceed if the item is found. If not, log it.
     if(recipeTitle == None):
         title = "Missing Title"
+    else:
+        title = recipeTitle.get_text()
+    
     if(recipeImg == None):
         img = "Missing Image"
+    else:
+        img = recipeImg.get("data-src")
+
     if(recipeOverview != None):
         for line in recipeOverview.stripped_strings:
             if(line[:1].isdigit()):
@@ -54,9 +60,7 @@ def scrapeSimplyRecipes(webdata, websiteType):
                 finalSteps.append(removeUnicodeCharacters(line)) 
                 #print(line)
 
-    title = recipeTitle.get_text()
-
-    img = recipeImg.get("data-src")
+    
 
 
 

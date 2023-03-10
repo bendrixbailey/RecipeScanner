@@ -42,7 +42,10 @@ def buildJsonRecipe(title, img, overview, ingredients, steps):
     }
     recipe["name"] = title
     recipe["imageLink"] = img
-    recipe["prepTime"] = overview[-2:][0]
+    if(len(overview) > 0):
+        recipe["prepTime"] = overview[-2:][0]
+    else:
+        recipe["prepTime"] = "0"
     recipe["ingredients"] = ingredients
     recipe["steps"] = steps
 
