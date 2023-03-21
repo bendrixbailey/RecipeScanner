@@ -18,15 +18,28 @@ def scrapeWebsite(webdata, websiteType):
     finalOverview = []
     finalIngredients = []
     finalSteps = []
-    id = "structured-project-content_1-0"
 
     soupedData = bs(webdata.content, "html.parser")
 
-    recipeTitle = soupedData.find("h1", {"class":"heading__title"})
-    recipeImg = soupedData.find("img", {"id":"mntl-sc-block-image_1-0-2"})
-    recipeOverview = soupedData.find("div", {"id":"project-meta_1-0"})
-    recipeIngredients = soupedData.find("div", {"id":"structured-ingredients_1-0"})
-    recipeSteps = soupedData.find("div", {"id" : "structured-project__steps_1-0"})
+    # print(websiteType.TITLE.value)
+    # print(websiteType.IMG.value)
+    # print(websiteType.OVERVIEW.value)
+    # print(websiteType.INGREDIENTS.value)
+    # print(websiteType.STEPS.value)
+
+    # recipeTitle = soupedData.find(websiteType.TITLE.value)
+    # recipeImg = soupedData.find(websiteType.IMG.value)
+    # recipeOverview = soupedData.find(websiteType.OVERVIEW.value)
+    # recipeIngredients = soupedData.find(websiteType.INGREDIENTS.value)
+    # recipeSteps = soupedData.find(websiteType.STEPS.value)
+
+    recipeTitle = soupedData.find(websiteType.TITLE.value["class"], {websiteType.TITLE.value["identifier"] : websiteType.TITLE.value["value"]})
+    recipeImg = soupedData.find(websiteType.IMG.value["class"], {websiteType.IMG.value["identifier"] : websiteType.IMG.value["value"]})
+    recipeOverview = soupedData.find(websiteType.OVERVIEW.value["class"], {websiteType.OVERVIEW.value["identifier"] : websiteType.OVERVIEW.value["value"]})
+    recipeIngredients = soupedData.find(websiteType.INGREDIENTS.value["class"], {websiteType.INGREDIENTS.value["identifier"] : websiteType.INGREDIENTS.value["value"]})
+    recipeSteps = soupedData.find(websiteType.STEPS.value["class"], {websiteType.STEPS.value["identifier"] : websiteType.STEPS.value["value"]})
+
+    #print(recipeOverview)
 
     #None check each item and only proceed if the item is found. If not, log it.
     if(recipeTitle == None):

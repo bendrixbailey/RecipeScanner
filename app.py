@@ -1,5 +1,6 @@
 import requests
 from util.scraper import *
+from util.webtags import *
 import configparser
 import json
 
@@ -28,7 +29,7 @@ def main():
         if(command != "exit" or command != "quit"):
             if(command == "test"):
                 webdata = requests.get("https://www.simplyrecipes.com/lemony-baked-cod-with-wild-rice-and-fennel-recipe-5224339")
-                result = scrapeWebsite(webdata, "simplyrecipes")
+                result = scrapeWebsite(webdata, simplyrecipes)
             else:
                 webdata = requests.get(command)
 
