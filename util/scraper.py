@@ -1,10 +1,6 @@
 from bs4 import BeautifulSoup as bs
-import configparser
 from util.helpers import *
 
-
-config = configparser.ConfigParser()
-config.read('util/websites.ini')
 
 def scrapeWebsite(webdata, websiteType):
     """Logic for scraping the SimplyRecipes website. Method will only work, as it needs tags for specific information sections
@@ -19,7 +15,8 @@ def scrapeWebsite(webdata, websiteType):
     finalIngredients = []
     finalSteps = []
 
-    soupedData = bs(webdata.content, "html.parser")
+    #soupedData = bs(webdata.content, "html.parser")  #uncomment if using requests
+    soupedData = bs(webdata, "html.parser")
 
     #Sub in the specific tags for the website passed in
     recipeTitle = soupedData.find(websiteType.TITLE.value["class"], {websiteType.TITLE.value["identifier"] : websiteType.TITLE.value["value"]})
@@ -32,7 +29,7 @@ def scrapeWebsite(webdata, websiteType):
     if(recipeTitle == None):
         title = "Missing Title"
     else:
-        title = recipeTitle.get_text()
+        title = removeUnicodeCharacters(recipeTitle.get_text())
     
     if(recipeImg == None):
         img = "Missing Image"
@@ -40,13 +37,15 @@ def scrapeWebsite(webdata, websiteType):
         img = recipeImg.get("data-src")
 
     if(recipeOverview != None):
-        for line in recipeOverview.stripped_strings:
-            if(line[:1].isdigit()):
-                finalOverview.append(line)
+        lines = list(recipeOverview.stripped_strings)
+        for line in range(len(lines)):
+            if("Total" in lines[line]):
+            #if(line[:1].isdigit()):
+                finalOverview.append(lines[line + 1])
     if(recipeIngredients != None):
         for line in recipeIngredients.get_text().split("\n"):
             if(len(line)>1):
-                finalIngredients.append(removeUnicodeCharacters(line.strip("\n")))
+                finalIngredients.append(removeUnicodeCharacters(line))
     if(recipeSteps != None):
         recipeSteps.find("figure").decompose()
         stepcounter = 1

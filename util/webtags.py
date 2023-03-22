@@ -43,15 +43,15 @@ class allrecipes(Enum):
     OVERVIEW = {
         "class" : "div",
         "identifier" : "id",
-        "value" : "project-meta_1-0"
+        "value" : "recipe-details_1-0"
     }
     INGREDIENTS = {
-        "class" : "div",
-        "identifier" : "id",
-        "value" : "structured-ingredients_1-0"
+        "class" : "ul",
+        "identifier" : "class",
+        "value" : "mntl-structured-ingredients__list"
     }
     STEPS = {
-        "class" : "div",
+        "class" : "ol",
         "identifier" : "id",
-        "value" : "structured-project__steps_1-0"
+        "value" : "mntl-sc-block_2-0"
     }
