@@ -81,3 +81,23 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     # Print New Line on Complete
     if iteration == total: 
         print()
+
+def summarizeDataPrintMissingInfo(filename):
+    linecounter = 0
+    errorReport = []
+    with open(filename) as file:
+        for line in file:
+            if "Missing Title" in line:
+                errorReport.append("ERROR: Missing title on line " + str(linecounter))
+            if "Missing Image" in line:
+                errorReport.append("ERROR: Missing image link on line " + str(linecounter))
+            if "prepTime" in line and "0" in line:
+                errorReport.append("WARNING: No preptime found for recipe on line " + str(linecounter))
+            if "ingredients" in line and "[]" in line:
+                errorReport.append("ERROR: No ingredients found for recipe on line " + str(linecounter))
+            if "steps" in line and "[]" in line:
+                errorReport.append("ERROR: No steps found for recipe on line " + str(linecounter))
+            linecounter = linecounter + 1
+
+    for item in errorReport:
+        print(item)

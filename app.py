@@ -69,6 +69,8 @@ def main():
             with open(filename + ".json", "w") as outfile:
                 json.dump(result, outfile, indent=4)
             print("Data saved to " + filename + ".json")
+
+            summarizeDataPrintMissingInfo(filename + ".json")
             
         
 

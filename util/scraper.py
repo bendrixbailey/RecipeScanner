@@ -47,7 +47,8 @@ def scrapeWebsite(webdata, websiteType):
             if(len(line)>1):
                 finalIngredients.append(removeUnicodeCharacters(line))
     if(recipeSteps != None):
-        recipeSteps.find("figure").decompose()
+        if(recipeSteps.find("figure") != None):
+            recipeSteps.find("figure").decompose()
         stepcounter = 1
 
         for line in recipeSteps.stripped_strings:
