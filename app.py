@@ -34,10 +34,9 @@ def main():
                 webdata = requests.get(command)
 
             if("simplyrecipes" in command):
-                result = scrapeWebsite(webdata, "simplyrecipes")
+                result = scrapeWebsite(webdata, simplyrecipes)
         
-            
-            
+        
             with open(filename + ".json", "w") as outfile:
                 json.dump(result, outfile, indent=4)
             print("Data saved to " + filename + ".json")
