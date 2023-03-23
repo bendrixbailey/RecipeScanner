@@ -37,6 +37,7 @@ def main():
 
     result = ""
     if(link != None):
+        #if theres a link, check if its a test run or not
         if(link == "test"):
             webdata = urlopen("https://www.simplyrecipes.com/lemony-baked-cod-with-wild-rice-and-fennel-recipe-5224339").read()
             result = scrapeWebsite(webdata, simplyrecipes)
@@ -48,17 +49,19 @@ def main():
                 result = scrapeWebsite(webdata, allrecipes) 
 
     if(infile != None):
-        #how to open a file and read line by line python?
+        #if theres a file, process it
         result = []
         numlinks = 0
         lineNum = 0
         with open(infile) as file:
             numlinks = len(file.readlines())
             file.seek(0)
+            #call to external progress bar function to visually display, as theres lots of delay to this
             printProgressBar(0, numlinks, prefix="Progress", suffix="Converted", length=50)
             for line in file:
                 webdata = urlopen(line).read()
                 tempLine = ""
+                #new recipe website checks will be added here
                 if("simplyrecipes" in line):
                     tempLine = scrapeWebsite(webdata, simplyrecipes)
                 if("allrecipes" in line):
@@ -72,6 +75,7 @@ def main():
         with open(outfile + ".json", "w") as outputfile:
             json.dump(result, outputfile, indent=4)
     else:
+        # if append is selected, need to do funky json loading so it stays valid
         with open(outfile + ".json") as inputfile:
             try:
                 data = json.load(inputfile)
@@ -87,7 +91,7 @@ def main():
             json.dump(result, outputfile, indent=4)
     
     print("Data saved to " + outfile + ".json")
-
+    #show helpful summary just to warn of some missing data program couldnt find
     summarizeDataPrintMissingInfo(outfile + ".json")
             
         
