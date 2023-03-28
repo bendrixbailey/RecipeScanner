@@ -18,7 +18,10 @@ def removeUnicodeCharacters(line):
     fixedline = fixedline.replace("\u2153", "1/3")
     fixedline = fixedline.replace("\u2154", "2/3")
     fixedline = fixedline.replace("\u00bc", "1/4")
+    fixedline = fixedline.replace("\u215b", "1/8")
     fixedline = fixedline.replace("\u2019", "'")
+    fixedline = fixedline.replace("\u2014", "-")
+    fixedline = fixedline.replace("\u00e9", "e")
     fixedline = fixedline.replace("\u00f1", "n")
     return fixedline
 
