@@ -6,9 +6,9 @@ import ssl
 import time
 import certifi
 from urllib.request import urlopen
+import argparse
 
-
-site = "SimplyRecipes"
+argparser = argparse.ArgumentParser()
 ssl._create_default_https_context = ssl._create_unverified_context
 
 def main():
@@ -57,12 +57,14 @@ def main():
 
             else:
                 #webdata = requests.get(command)
+                start = time.time()
                 webdata = urlopen(command).read()
                 if("simplyrecipes" in command):
                     result = scrapeWebsite(webdata, simplyrecipes, 0)
                 if("allrecipes" in command):
                     result = scrapeWebsite(webdata, allrecipes, 0) 
-
+                end = time.time()
+                print(end-start)
         
             with open(filename + ".json", "w") as outfile:
                 json.dump(result, outfile, indent=4)
