@@ -47,9 +47,9 @@ def main():
                         webdata = urlopen(line).read()
                         tempLine = ""
                         if("simplyrecipes" in line):
-                            tempLine = scrapeWebsite(webdata, simplyrecipes)
+                            tempLine = scrapeWebsite(webdata, simplyrecipes, lineNum)
                         if("allrecipes" in line):
-                            tempLine = scrapeWebsite(webdata, allrecipes) 
+                            tempLine = scrapeWebsite(webdata, allrecipes, lineNum) 
                         if(result != ""):
                             result.append(tempLine)
                         printProgressBar(lineNum + 1, numlinks, prefix="Progress", suffix="Converted", length=50)
@@ -57,14 +57,12 @@ def main():
 
             else:
                 #webdata = requests.get(command)
-                start = time.time()
                 webdata = urlopen(command).read()
                 if("simplyrecipes" in command):
-                    result = scrapeWebsite(webdata, simplyrecipes)
+                    result = scrapeWebsite(webdata, simplyrecipes, 0)
                 if("allrecipes" in command):
-                    result = scrapeWebsite(webdata, allrecipes) 
-                end = time.time()
-                print(end-start)
+                    result = scrapeWebsite(webdata, allrecipes, 0) 
+
         
             with open(filename + ".json", "w") as outfile:
                 json.dump(result, outfile, indent=4)

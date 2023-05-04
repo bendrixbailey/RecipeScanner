@@ -26,7 +26,7 @@ def removeUnicodeCharacters(line):
     return fixedline
 
 
-def buildJsonRecipe(title, img, overview, ingredients, steps):
+def buildJsonRecipe(title, img, overview, ingredients, steps, recipeIndex):
     """Given valid inputs, will create a json object representing the recipe
 
     Args:
@@ -40,7 +40,7 @@ def buildJsonRecipe(title, img, overview, ingredients, steps):
         Dict: json  object for recipe
     """
     recipe = {
-        "id" : "",
+        "index" : 0,
         "name" : "",
         "prepTime": 0,
         "imageLink": "",
@@ -54,6 +54,7 @@ def buildJsonRecipe(title, img, overview, ingredients, steps):
     }
     recipe["name"] = title
     recipe["imageLink"] = img
+    recipe["index"] = recipeIndex
     if(len(overview) > 0):
         recipe["prepTime"] = overview[-2:][0]
     else:
@@ -94,7 +95,7 @@ def summarizeDataPrintMissingInfo(filename):
                 errorReport.append("ERROR: Missing title on line " + str(linecounter))
             if "Missing Image" in line:
                 errorReport.append("ERROR: Missing image link on line " + str(linecounter))
-            if "prepTime" in line and "0" in line:
+            if "prepTime" in line and "0" in line and "mins" not in line:
                 errorReport.append("WARNING: No preptime found for recipe on line " + str(linecounter))
             if "ingredients" in line and "[]" in line:
                 errorReport.append("ERROR: No ingredients found for recipe on line " + str(linecounter))

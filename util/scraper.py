@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup as bs
 from util.helpers import *
 
 
-def scrapeWebsite(webdata, websiteType):
+def scrapeWebsite(webdata, websiteType, recipeIndex):
     """Logic for scraping the SimplyRecipes website. Method will only work, as it needs tags for specific information sections
 
     Args:
@@ -34,12 +34,13 @@ def scrapeWebsite(webdata, websiteType):
     if(recipeImg == None):
         img = "Missing Image"
     else:
-        img = recipeImg.get("data-src")
+        tempimg = recipeImg.find("img")
+        img = tempimg.get("data-src")
 
     if(recipeOverview != None):
         lines = list(recipeOverview.stripped_strings)
         for line in range(len(lines)):
-            if("Total" in lines[line]):
+            if("Total Time" in lines[line]):
             #if(line[:1].isdigit()):
                 finalOverview.append(lines[line + 1])
     if(recipeIngredients != None):
@@ -59,4 +60,4 @@ def scrapeWebsite(webdata, websiteType):
                 finalSteps.append(removeUnicodeCharacters(line)) 
 
 
-    return buildJsonRecipe(title, img, finalOverview, finalIngredients, finalSteps)
+    return buildJsonRecipe(title, img, finalOverview, finalIngredients, finalSteps, recipeIndex)

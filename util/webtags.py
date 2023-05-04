@@ -7,15 +7,20 @@ class simplyrecipes(Enum):
         "identifier" : "class",
         "value" : "heading__title"
     }
+    # IMG = {
+    #     "class" : "div",
+    #     "identifier" : "class",
+    #     "value" : "figure-media"
+    # }
     IMG = {
-        "class" : "img",
-        "identifier" : "id",
-        "value" : "mntl-sc-block-image_1-0-2"
+        "class" : "div",
+        "identifier" : "class",
+        "value" : "img-placeholder"
     }
     OVERVIEW = {
         "class" : "div",
-        "identifier" : "id",
-        "value" : "project-meta_1-0"
+        "identifier" : "class",
+        "value" : "loc total-time project-meta__total-time"
     }
     INGREDIENTS = {
         "class" : "div",
@@ -36,9 +41,9 @@ class allrecipes(Enum):
         "value" : "article-heading_1-0"
     }
     IMG = {
-        "class" : "img",
-        "identifier" : "id",
-        "value" : "mntl-sc-block-image_1-0-2"
+        "class" : "div",
+        "identifier" : "class",
+        "value" : "img-placeholder"
     }
     OVERVIEW = {
         "class" : "div",
