@@ -93,7 +93,7 @@ def summarizeDataPrintMissingInfo(filename):
         for line in file:
             if "Missing Title" in line:
                 errorReport.append("ERROR: Missing title on line " + str(linecounter))
-            if "Missing Image" in line:
+            if "Missing Image" in line or ("imageLink" in line and "https" not in line):
                 errorReport.append("ERROR: Missing image link on line " + str(linecounter))
             if "prepTime" in line and "0" in line and "mins" not in line:
                 errorReport.append("WARNING: No preptime found for recipe on line " + str(linecounter))

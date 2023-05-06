@@ -35,7 +35,7 @@ def scrapeWebsite(webdata, websiteType, recipeIndex):
         img = "Missing Image"
     else:
         tempimg = recipeImg.find("img")
-        img = tempimg.get("data-src")
+        img = tempimg.get("src")
 
     if(recipeOverview != None):
         lines = list(recipeOverview.stripped_strings)

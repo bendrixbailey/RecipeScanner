@@ -7,16 +7,16 @@ class simplyrecipes(Enum):
         "identifier" : "class",
         "value" : "heading__title"
     }
+    IMG = {
+        "class" : "figure",
+        "identifier" : "id",
+        "value" : "primary-image_1-0"
+    }
     # IMG = {
     #     "class" : "div",
     #     "identifier" : "class",
-    #     "value" : "figure-media"
+    #     "value" : "img-placeholder"
     # }
-    IMG = {
-        "class" : "div",
-        "identifier" : "class",
-        "value" : "img-placeholder"
-    }
     OVERVIEW = {
         "class" : "div",
         "identifier" : "class",
